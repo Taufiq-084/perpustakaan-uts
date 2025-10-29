@@ -1,3 +1,37 @@
+<?php
+session_start();
+require_once 'config.php';
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $hashed_password = md5($password);
+    $sql = "SELECT id_admin, username, nama_lengkap FROM admin WHERE username = ? AND password = ?";
+
+    if ($stmt = $mysqli->prepare($sql)) {
+        $stmt->bind_param("ss", $username, $hashed_password);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows == 1) {
+            $stmt->bind_result($admin_id, $admin_username, $admin_nama_lengkap);
+            $stmt->fetch();
+
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_id'] = $admin_id;
+            $_SESSION['admin_username'] = $admin_username;
+            $_SESSION['admin_nama_lengkap'] = $admin_nama_lengkap;
+            header("Location: index.php");
+            exit;
+        } else {
+            $pesan = "Username atau Password salah!";
+        }
+        $stmt->close();
+    }
+    $mysqli->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,22 +54,33 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        <form>
+                                        
+                                        <?php if (!empty($pesan)): ?> 
+                                        <div class="alert alert-danger" role="alert">
+                                            <?php  echo $pesan ?>
+                                        </div>
+                                        <?php endif ?>
+
+                                        <form action="login.php" method="post">
+                            
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                                <label for="inputEmail">Username</label>
+                                                <input class="form-control" name="username" id="username" type="text"/>
+                                                <label for="username">Username</label>
                                             </div>
+
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
-                                                <label for="inputPassword">Password</label>
+                                                <input class="form-control" name="password" id="password" type="password"/>
+                                                <label for="password">Password</label>
                                             </div>
+
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
                                                 <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
                                             </div>
+
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <span class="small">Forgot Password?</span>
-                                                <button class="btn btn-primary" href="index.html">Login</button>
+                                                <button class="btn btn-primary" type="submit">Login</button>
                                             </div>
                                         </form>
                                     </div>

@@ -8,41 +8,48 @@
                     Dashboard
                 </a>
                 <div class="sb-sidenav-menu-heading">Manajemen</div>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                <!-- ini menu buku -->
+                <a class="nav-link <?php echo ($page == "daftar-buku" || $page == "tambah-buku" || $page == "ubah-buku") ? "active" : "collapsed" ?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                     Data Buku
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <div class="collapse <?php echo ($page == "daftar-buku" || $page == "tambah-buku" || $page == "ubah-buku") ? "show" : "" ?>" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="layout-static.html">Daftar Buku</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Tambah Buku</a>
+                        <a class="nav-link <?php echo ($page == "daftar-buku")? 'active' : '';  ?>" href="index.php?hal=daftar-buku">Daftar Buku</a>
+                        <a class="nav-link <?php echo ($page == "tambah-buku")? 'active' : '';  ?>" href="index.php?hal=tambah-buku">Tambah Buku</a>
                     </nav>
                 </div>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                <!-- akhir menu buku -->
+
+                <!-- ini untuk menu kategori -->
+                <a class="nav-link <?php echo ($page == "daftar-kategori" || $page == "tambah-kategori" || $page == "ubah-kategori") ? "active" : "collapsed" ?>" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                     <div class="sb-nav-link-icon"><i class="fas fa-folder-open"></i></div>
                     Kategori
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <div class="collapse <?php echo ($page == "daftar-kategori" || $page == "tambah-kategori" || $page == "ubah-kategori") ? "show" : "" ?>"  id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="layout-static.html">Daftar Kategori</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Tambah Kategori</a>
+                        <a class="nav-link <?php echo ($page == "daftar-kategori")? 'active' : '';  ?>" href="index.php?hal=daftar-kategori">Daftar Kategori</a>
+                        <a class="nav-link <?php echo ($page == "tambah-kategori")? 'active' : '';  ?>" href="index.php?hal=tambah-kategori">Tambah Kategori</a>
                     </nav>
                 </div>
+                <!-- bata menu kategori -->
 
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#colapsAnggota" aria-expanded="false" aria-controls="colapsAnggota">
+                <!-- menu anggota -->
+                <a class="nav-link <?php echo ($page == "daftar-anggota" || $page == "tambah-anggota" || $page == "ubah-password") ? "active" : "collapsed" ?>" href="#" data-bs-toggle="collapse" data-bs-target="#colapsAnggota" aria-expanded="false" aria-controls="colapsAnggota">
                     <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                     Anggota
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="colapsAnggota" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <div class="collapse <?php echo ($page == "daftar-anggota" || $page == "tambah-anggota" || $page == "ubah-password") ? "show" : "" ?>" id="colapsAnggota" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="layout-static.html">Daftar Anggota</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Tambah Anggota</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Peminjaman</a>
+                        <a class="nav-link <?php echo ($page == "daftar-anggota")? 'active' : '';  ?>" href="index.php?hal=daftar-anggota">Daftar Anggota</a>
+                        <a class="nav-link <?php echo ($page == "tambah-anggota")? 'active' : '';  ?>" href="index.php?hal=tambah-anggota">Tambah Anggota</a>
+                        
                     </nav>
                 </div>
+                <!-- batas menu anggota -->
 
                 <div class="sb-sidenav-menu-heading">Transaksi</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#colapsPeminjaman" aria-expanded="false" aria-controls="colapsPeminjaman">
@@ -66,7 +73,7 @@
                         <a class="nav-link" href="layout-static.html">Konfirmasi</a>
                     </nav>
                 </div>
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="logout.php">
                     <div class="sb-nav-link-icon"><i class="fas fa-sign-out"></i></div>
                     Logout
                 </a>
@@ -74,7 +81,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            Start Bootstrap
+            <?php echo $_SESSION ['admin_nama_lengkap'] ?>
         </div>
     </nav>
 </div>

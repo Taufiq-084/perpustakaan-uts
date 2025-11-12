@@ -4,7 +4,7 @@
 $db_host = 'localhost';
 $db_user = 'root';
 $db_pass = '';
-$db_name = 'db_perpus';
+$db_name = 'sd_perpus1';
 
 // mematikan error reporting untuk mysqli
 mysqli_report(MYSQLI_REPORT_OFF);

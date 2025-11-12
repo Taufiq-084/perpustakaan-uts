@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['admin_logged_in'])) {
+if(!isset($_SESSION['admin_logged_in'])){
     header("Location: login.php");
     exit;
 }
 
-require_once 'config.php';
+require_once "config.php";
 define('MY_APP', true);
 
 // Get hal

@@ -1,8 +1,14 @@
-<?php
+<?php 
 session_start();
-require_once 'config.php';
+require_once "config.php";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if(isset($_SESSION['admin_logged_in'])) {
+    //ini artinya jika $_SESSION['admn_logged_in'] adalah true (kalau true maka sudah login)
+    //maka akan dilempar di index.php
+    header("Location: index.php");
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $username = $_POST['username'];
     $password = $_POST['password'];
     $hashed_password = md5($password);
@@ -12,26 +18,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bind_param("ss", $username, $hashed_password);
         $stmt->execute();
         $stmt->store_result();
+      
 
-        if ($stmt->num_rows == 1) {
+        if($stmt->num_rows == 1) {
+            
             $stmt->bind_result($admin_id, $admin_username, $admin_nama_lengkap);
             $stmt->fetch();
 
             $_SESSION['admin_logged_in'] = true;
-            $_SESSION['admin_id'] = $admin_id;
+            $_SESSION['admin_id'] = $admin_id; 
             $_SESSION['admin_username'] = $admin_username;
             $_SESSION['admin_nama_lengkap'] = $admin_nama_lengkap;
+    
             header("Location: index.php");
             exit;
         } else {
-            $pesan = "Username atau Password salah!";
+            $pesan = "Username atau Password salah";
         }
         $stmt->close();
     }
     $mysqli->close();
 }
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -52,32 +61,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
-                                    <div class="card-body">
-                                        
-                                        <?php if (!empty($pesan)): ?> 
+                                    <div class="card-header">
+                                        <h3 class="text-center font-weight-light my-4">Login</h3>
+                                    </div>
+                                        <div class="card-body">
+                                            <?php if (!empty($pesan)) : ?>
                                         <div class="alert alert-danger" role="alert">
-                                            <?php  echo $pesan ?>
+                                            <?php echo $pesan ?>
                                         </div>
                                         <?php endif ?>
-
                                         <form action="login.php" method="post">
-                            
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="username" id="username" type="text"/>
-                                                <label for="username">Username</label>
+                                                <input class="form-control" name="username" id="username" type="text" />
+                                                <label for="inputEmail">Username</label>
                                             </div>
-
+                                            
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" name="password" id="password" type="password"/>
-                                                <label for="password">Password</label>
+                                                <input class="form-control" id="password" name="password" type="password"/>
+                                                <label for="inputPassword">Password</label>
                                             </div>
-
+                                            
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
                                                 <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
                                             </div>
-
+                                            
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <span class="small">Forgot Password?</span>
                                                 <button class="btn btn-primary" type="submit">Login</button>
